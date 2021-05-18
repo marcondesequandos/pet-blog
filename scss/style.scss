@@ -3,6 +3,7 @@ $light-grey: #eaeaeb;
 $dark-grey: #464646;
 $yellow: #FABE50;
 $img-width: 45%;
+$img-width-phone: 100%;
 
 %no-decoration {text-decoration: none;}
 %u-decoration {text-decoration: underline;}
@@ -49,12 +50,34 @@ $img-width: 45%;
             border-bottom: 1px solid $light-grey;
             margin-left: auto;
             margin-right: auto;
-            width: 80%;
-            padding: 20px 0;
+
+            @include for-phone-only {
+                width: 90%;
+                padding: 15px 0;
+                flex-wrap: wrap;
+            }
+
+            @include for-tablet-only {
+                width: 80%;
+                padding: 20px 0;
+            }
+            @include for-desktop-only {
+                width: 80%;
+                padding: 20px 0;
+            }
+            
+
+
+
+
         }
 
         &__links {
-            position: relative;        
+            position: relative;
+            
+            @include for-phone-only {
+                padding: 5px 0;
+            }
         }
 
         &:not(:last-child)::after {
@@ -92,6 +115,11 @@ $img-width: 45%;
     font-family: Arial, Helvetica, sans-serif;
 
     &__content {
+        @include for-phone-only {
+            width: 100%;         
+        }
+
+
         width: 70%;
         padding: 40px 8px;
     }
@@ -202,7 +230,11 @@ $img-width: 45%;
         }
     }
 
-    .sidebar {
+    .sidebar {        
+        @include for-phone-only {
+            width: 100%;
+        }
+
         width: 25%;
         padding: 40px 10px;
 
@@ -329,6 +361,10 @@ $img-width: 45%;
     }
 
     &__intro {
+        @include for-phone-only {
+            width: 100%;
+        }
+
         font-weight: 100;
         color: $dark-grey;
         width: 70%;
@@ -347,10 +383,16 @@ $img-width: 45%;
 
     &__img-description {
         width: $img-width;
+        @include for-phone-only {
+            width: $img-width-phone;
+        }
     }
 
     &__txt {
         width: calc(100% - #{$img-width});
+        @include for-phone-only {
+            width: 100%;
+        }
     }
 
     &__p {
@@ -426,6 +468,9 @@ $img-width: 45%;
     }
 
     &__content {
+        @include for-phone-only {
+            text-align: justify;
+        }
         font-weight: 100;
         font-size: 14px;
         color: $dark-grey;
