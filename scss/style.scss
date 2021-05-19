@@ -3,7 +3,7 @@ $light-grey: #eaeaeb;
 $dark-grey: #464646;
 $yellow: #FABE50;
 $img-width: 45%;
-$img-width-phone: 100%;
+$img-width-phone: 80%;
 
 %no-decoration {text-decoration: none;}
 %u-decoration {text-decoration: underline;}
@@ -31,82 +31,27 @@ $img-width-phone: 100%;
     @media (min-width: 1200px) { @content; }
 }
 
-.header {
-    font-family: Arial, Helvetica, sans-serif;
+@function calculateRem($size) {
+    @return $size / 16px * 1rem;
+}
 
-    &__logo {
-        text-align: center;
-    }
+@mixin fontSize($size) {
+    font-size: calculateRem($size);
+}
 
-    &__img {
-        max-width: 350px;
-    }
+@import 'header', 'footer', 'about', 'article', 'collection', 'contact';
 
-    .menu {
-        &__list {
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid $light-grey;
-            border-bottom: 1px solid $light-grey;
-            margin-left: auto;
-            margin-right: auto;
+$directions: top, bottom, left, right;
+$layout-margin-size: 10px;
 
-            @include for-phone-only {
-                width: 90%;
-                padding: 15px 0;
-                flex-wrap: wrap;
-            }
-
-            @include for-tablet-only {
-                width: 80%;
-                padding: 20px 0;
-            }
-            @include for-desktop-only {
-                width: 80%;
-                padding: 20px 0;
-            }
-            
-
-
-
-
-        }
-
-        &__links {
-            position: relative;
-            
-            @include for-phone-only {
-                padding: 5px 0;
-            }
-        }
-
-        &:not(:last-child)::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: -3px;
-            margin: auto;
-            height: 15px;
-            width: 1px;
-            background-color: $light-grey;
-        }
-
-        &__link {
-            padding: 0 25px;
-            color: $dark-grey; 
-            
-            &:hover {
-                color: $purple;
-            }
-        }
-
-        
-
-    }
-
+@each $direction in $directions {
+    %no-margin-#{$direction} {margin-#{$direction}: 0;}
+    %default-margin-#{$direction} {margin-#{$direction}: $layout-margin-size;}
+    %double-margin-#{$direction} {margin-#{$direction}: $layout-margin-size * 2;}
+    %half-margin-#{$direction} {margin-#{$direction}: $layout-margin-size / 2;}
     
 }
+
 
 .main {
     display: flex;
@@ -133,9 +78,9 @@ $img-width-phone: 100%;
 
     &__title {
         text-decoration: none;
-        font-size: 22px;
+        @include fontSize(22px);
         color: $dark-grey;
-        letter-spacing: 1.5;
+        letter-spacing: 1.5px;
         &:hover {
             color: $purple;
         }
@@ -145,23 +90,23 @@ $img-width-phone: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 10px;
-        margin-bottom: 20px;
+        @extend %default-margin-top, %double-margin-bottom;        
     }
 
     &__date {
-        margin: 0 10px;
-        font-size: 12px;
+        @extend %no-margin-top, %no-margin-bottom, %default-margin-left, %default-margin-right;
+        @include fontSize(12px);
         font-style: italic;
 
     }
 
     &__tag {
-        font-size: 14px;
+        @include fontSize(14px);
         padding: 5px 7px;
         color: $purple;
         border: 1px solid $purple;
-        margin: 0 10px;
+        @extend %no-margin-top, %no-margin-bottom, %default-margin-left, %default-margin-right; 
+
     }
 
     &__details {
@@ -177,12 +122,12 @@ $img-width-phone: 100%;
         max-width: 650px;
         margin-left: auto;
         margin-right: auto;
-        font-size: 14px;
+        @include fontSize(14px);
     }
 
     &__btn {
         text-decoration: none; 
-        font-size: 16px;
+        @include fontSize(16px);
         letter-spacing: 1.5;
         color: $purple;
         background-color: $yellow;
@@ -208,7 +153,7 @@ $img-width-phone: 100%;
     }
 
     &__p {
-        font-size: 14px;
+        @include fontSize(14px);
         color: $dark-grey;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -220,7 +165,7 @@ $img-width-phone: 100%;
 
     &__a {
         text-decoration: none;
-        font-size: 14px;
+        @include fontSize(16px);
         color: $dark-grey;
         margin-top: 10px; 
         margin-bottom: 10px;
@@ -251,7 +196,7 @@ $img-width-phone: 100%;
             letter-spacing: 1.5px;
         }
 
-  
+
         
         &__list {
             display: flex;
@@ -275,7 +220,7 @@ $img-width-phone: 100%;
         }
 
         &__post-title {
-            font-size: 14px;
+            @include fontSize(14px);
             color: $purple;
             @extend %no-decoration;
 
@@ -285,7 +230,7 @@ $img-width-phone: 100%;
         }
 
         &__post-date {
-            font-size: 12px;
+            @include fontSize(12px);
             margin: 5px 0 0 0;
         }
     }
@@ -293,190 +238,9 @@ $img-width-phone: 100%;
 }
 
 
-.footer {
-    text-align: center;
-    padding: 20px 0;
-    font-family: Arial, Helvetica, sans-serif;
-    position: relative;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-
-    &__logo {
-        max-width: 100px;    
-    }
-
-    &__txt {
-        margin: auto;
-        font-size: 14px;
-    }
-} 
-
-.about {
-    width: 80%;
-    margin: 0 auto 40px;
-    font-family: Arial, Helvetica, sans-serif;
-
-    &__title {
-        background-color: $light-grey;
-        text-align: center;
-        padding: 20px;        
-    }
-
-    &__h1 {
-        font-size: 22px;
-        color: $dark-grey;
-        letter-spacing: 1px;
-        margin-top: 5px;
-        margin-bottom: 10px;
-        margin-left: 0;
-        margin-right: 0;
-
-    }
-
-    .breadcrumb {
-        @include flx(justify-content, center);
-        align-items: center;        
-
-        &__link {
-            font-size: 12px;
-            text-decoration: none;
-            color: $dark-grey;
-            &:hover {
-                text-decoration: underline;
-                color: $purple;
-            }
-        }
-        
-        &__img {
-            width: 11px;
-            margin: 8px;
-            color: $dark-grey
-        }
-    }
-
-    &__img {
-        width: 100%;
-        margin-bottom: 20px;       
-    }
-
-    &__intro {
-        @include for-phone-only {
-            width: 100%;
-        }
-
-        font-weight: 100;
-        color: $dark-grey;
-        width: 70%;
-        margin: 30px auto;
-        text-align: center;
-        font-size: 16px;
-    }
-
-    &__split {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        align-items: center;
-
-    }
-
-    &__img-description {
-        width: $img-width;
-        @include for-phone-only {
-            width: $img-width-phone;
-        }
-    }
-
-    &__txt {
-        width: calc(100% - #{$img-width});
-        @include for-phone-only {
-            width: 100%;
-        }
-    }
-
-    &__p {
-        font-size: 14px;
-        padding: 10px 20px;
-        color: $dark-grey;
-    }
-
-}
-
-.article {
-    width: 80%;
-    margin: 0 auto 40px;
-    font-family: Arial, Helvetica, sans-serif;
-
-    &__title {
-        background-color: $light-grey;
-        text-align: center;
-        padding: 20px;
-    }
-
-    &__h1 {
-        font-size: 22px;
-        color: $dark-grey;
-        letter-spacing: 1px;
-        margin: 5px 0 10px;
-    }
-
-    .breadcrumb {
-        @include flx(justify-content, center);
-        align-items: center;
-
-        &__link {
-            font-size: 12px;
-            @extend %no-decoration;
-            color: $dark-grey;
-
-            &:hover {
-                @extend %u-decoration;
-                color: purple;
-            }
-        }
-
-        &__img {
-            width: 11px;
-            margin: 8px;
-        }
-    }
-
-    &__img {
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    &__details {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    &__date {
-        margin: 0 10px;
-        font-size: 12px;
-        font-style: italic;        
-    }
-
-    &__tag {
-        font-size: 14px;
-        padding: 5px 7px;
-        color: $purple;
-        border: 1px solid $purple;
-        margin: 0 10px;
-    }
-
-    &__content {
-        @include for-phone-only {
-            text-align: justify;
-        }
-        font-weight: 100;
-        font-size: 14px;
-        color: $dark-grey;
-        padding: 10px 20px;
-    }
 
 
-    
-}
+
+
+
+
